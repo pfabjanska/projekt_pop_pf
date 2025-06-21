@@ -1,13 +1,12 @@
+
 from tkinter import *
 import tkintermapview
 
 import requests
 from bs4 import BeautifulSoup
 
+from utils import model
 
-services: list =[]
-clients:list=[]
-workers:list=[]
 
 
 class Services:
@@ -17,6 +16,7 @@ class Services:
         self.service_location = service_location
 
         self.coordinates = self.get_coordinates()
+
 
 
     def get_coordinates(self) -> list:
@@ -71,6 +71,22 @@ class Worker:
         return [latitude, longitude]
 
 
+def odswiez_liste_serwisow():
+    listbox_lista_obiektow.delete(0, END)
+    for service in model.services:
+        listbox_lista_obiektow.insert(END, f"{service['service_name']} ({service['service_location']})")
+
+def odswiez_liste_klientow():
+    listbox_lista_obiektow_klient.delete(0, END)
+    for klient in model.clients:
+        listbox_lista_obiektow_klient.insert(END, f"{klient['client_name']} ({klient['client_service']})")
+
+def odswiez_liste_pracownikow():
+    listbox_lista_obiektow_pracownik.delete(0, END)
+    for pracownik in model.workers:
+        listbox_lista_obiektow_pracownik.insert(END, f"{pracownik['worker_name']} ({pracownik['worker_service']})")
+
+
 root = Tk()
 root.geometry("1200x760")
 root.title("Projekt pop pf")
@@ -89,18 +105,22 @@ ramka_mapa.grid(row=2, column=0, columnspan=2)
 # ramka_lista_serwisów
 label_lista_obiektow=Label(ramka_lista_obiektow, text="Lista serwisów rowerowych")
 label_lista_obiektow.grid(row=0, column=0,columnspan=2)
-listbox_lista_obiketow=Listbox(ramka_lista_obiektow, width=40, height=10)
-listbox_lista_obiketow.grid(row=1, column=0, columnspan=3)
+listbox_lista_obiektow=Listbox(ramka_lista_obiektow, width=40, height=10)
+listbox_lista_obiektow.grid(row=1, column=0, columnspan=3)
+odswiez_liste_serwisow()
 button_usun_obiekt=Button(ramka_lista_obiektow, text='Usuń obiekt')
 button_usun_obiekt.grid(row=2, column=0,)
 button_edytuj_obiekt=Button(ramka_lista_obiektow, text='Edytuj obiekt')
 button_edytuj_obiekt.grid(row=2, column=2)
+
+
 
 #ramka_lista_klientów
 label_lista_obiektow_klient=Label(ramka_lista_obiektow, text="Lista klientów")
 label_lista_obiektow_klient.grid(row=0, column=3,columnspan=2)
 listbox_lista_obiektow_klient=Listbox(ramka_lista_obiektow, width=40, height=10)
 listbox_lista_obiektow_klient.grid(row=1, column=3, columnspan=3)
+odswiez_liste_klientow()
 button_usun_obiekt_klient=Button(ramka_lista_obiektow, text='Usuń obiekt')
 button_usun_obiekt_klient.grid(row=2, column=3)
 button_edytuj_obiekt_klient=Button(ramka_lista_obiektow, text='Edytuj obiekt')
@@ -111,6 +131,7 @@ label_lista_obiektow_pracownik=Label(ramka_lista_obiektow, text="Lista pracownik
 label_lista_obiektow_pracownik.grid(row=0, column=6,columnspan=2)
 listbox_lista_obiektow_pracownik=Listbox(ramka_lista_obiektow, width=40, height=10)
 listbox_lista_obiektow_pracownik.grid(row=1, column=6, columnspan=3)
+odswiez_liste_pracownikow()
 button_usun_obiekt_pracownik=Button(ramka_lista_obiektow, text='Usuń obiekt')
 button_usun_obiekt_pracownik.grid(row=2, column=6)
 button_edytuj_obiekt_pracownik=Button(ramka_lista_obiektow, text='Edytuj obiekt')
