@@ -6,15 +6,15 @@ services: list[dict] = [
 ]
 
 clients: list[dict] = [
-    {'client_name': 'Andrzej Grodzik', 'client_service': 'HappyBike', 'client_location1': 'Poznań', 'client_location2': 'Turek'},
-    {'client_name': 'Maja Gaja','client_service':'BikeProject', 'client_location1':'Warszawa', 'client_location2':'Kutno'},
-    {'client_name': 'Szymon Kajak','client_service':'Sportset', 'client_location1':'Warszawa', 'client_location2':'Kutno'},
-    {'client_name': 'Milena Kolarka','client_service':'Rowerologia','client_location1':'Gdańsk'}
+    {'client_name': 'Andrzej Grodzik', 'client_service': 'HappyBike', 'client_location1': 'Poznań'},
+    {'client_name': 'Maja Gaja','client_service':'BikeProject', 'client_location1':'Wołomin'},
+    {'client_name': 'Szymon Kajak','client_service':'Sportset', 'client_location1':'Krośniewice'},
+    {'client_name': 'Milena Kolarka','client_service':'Rowerologia','client_location1':'Sopot'}
 ]
 
 workers: list[dict] = [
     {'worker_name': 'Ryszard Śliski', 'worker_service': 'HappyBike', 'worker_location': 'Koło'},
-    {'worker_name': 'Marta Kowalska', 'worker_service': 'BikeProject', 'worker_location': 'Wołomin'},
+    {'worker_name': 'Marta Kowalska', 'worker_service': 'BikeProject', 'worker_location': 'Pruszków'},
     {'worker_name': 'Stefan Potoczek', 'worker_service': 'Sportset', 'worker_location': 'Łowicz'},
     {'worker_name': 'Malwina Kalina', 'worker_service': 'Rowerologia', 'worker_location':'Szczecin'}
 ]
