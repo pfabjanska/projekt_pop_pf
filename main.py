@@ -1,4 +1,3 @@
-
 from tkinter import *
 from tkinter.ttk import*
 import tkintermapview
@@ -8,9 +7,8 @@ from bs4 import BeautifulSoup
 
 from utils import model
 
-tryb_edycji = None  # "serwis", "klient", "pracownik"
+tryb_edycji = None
 wybrany_indeks = None
-
 
 def get_coordinates_nominatim(address: str) -> tuple:
     url = "https://nominatim.openstreetmap.org/search"
@@ -34,13 +32,11 @@ def get_coordinates_nominatim(address: str) -> tuple:
         print(f"Nie znaleziono współrzędnych dla: {address}")
         return None, None
 
-
 class Services:
     def __init__(self, service_name, service_location, coordinates=None ):
         self.service_name = service_name
         self.service_location = service_location
         self.coordinates = coordinates if coordinates else self.get_coordinates()
-
 
     def get_coordinates(self) -> list:
         full_address = f"{self.service_name}, {self.service_location}"
@@ -48,14 +44,12 @@ class Services:
         print(latitude, longitude)
         return [latitude, longitude] if latitude is not None else [0.0, 0.0]
 
-
 class Client:
     def __init__(self,client_name,client_service,client_location1,):
         self.client_name =client_name
         self.client_service=client_service
         self.client_location1=client_location1
         self.coordinates=self.get_coordinates()
-
 
     def get_coordinates(self) -> list:
         try:
@@ -69,16 +63,12 @@ class Client:
         except Exception:
             return None
 
-
-
-
 class Worker:
     def __init__(self,worker_name,worker_service,worker_location):
         self.worker_name =worker_name
         self.worker_service=worker_service
         self.worker_location=worker_location
         self.coordinates=self.get_coordinates()
-
 
     def get_coordinates(self) -> list:
         try:
@@ -280,8 +270,6 @@ def pokaz_klientow_serwisu(serwis_nazwa):
         for klient in klienci:
             lat, lon = klient.coordinates
             mapa.set_marker(lat, lon, text=klient.client_name)
-    else:
-        print("Nie znaleziono serwisu")
 
 def pokaz_pracownikow_serwisu(serwis_nazwa):
     mapa.delete_all_marker()
@@ -295,23 +283,13 @@ def pokaz_pracownikow_serwisu(serwis_nazwa):
             lat, lon = pracownik.coordinates
             mapa.set_marker(lat, lon, text=pracownik.worker_name)
 
-
-        print(f"Pokazuję pracowników dla serwisu: {serwis_nazwa}")
-        print(f"Pracownicy w model.workers: {[p.worker_service for p in model.workers]}")
-        print(f"Wybrane osoby: {[p.worker_name for p in pracownicy]}")
-
-    else:
-        print("Nie znaleziono serwisu")
-
 root = Tk()
 root.geometry("1200x760")
 root.title("Projekt pop pf")
 root.grid_rowconfigure(0, weight=3)
 root.grid_rowconfigure(1, weight=2)
-
 root.grid_columnconfigure(0, weight=3)
 root.grid_columnconfigure(1, weight=2)
-
 
 ramka_lista_obiektow=Frame(root)
 ramka_formularz=Frame(root)
@@ -335,8 +313,6 @@ button_dodaj_obiekt = Button(ramka_lista_obiektow, text='Nowy serwis', command=d
 button_dodaj_obiekt.grid(row=2, column=1,)
 button_edytuj_obiekt=Button(ramka_lista_obiektow, text='Edytuj serwis',command=edytuj_serwis)
 button_edytuj_obiekt.grid(row=2, column=2)
-
-
 
 #ramka_lista_klientów
 label_lista_obiektow_klient=Label(ramka_lista_obiektow, text="Lista klientów")
@@ -379,7 +355,6 @@ label_location=Label(ramka_formularz, text="Lokalizacja serwisu:")
 label_location.grid(row=5, column=0,sticky=W)
 label_serwis=Label(ramka_formularz, text="Serwis rowerowy:")
 label_serwis.grid(row=6, column=0,sticky=W)
-
 entry_pracownik=Entry(ramka_formularz)
 entry_pracownik.grid(row=1, column=1)
 entry_klient=Entry(ramka_formularz)
@@ -393,10 +368,11 @@ entry_location.grid(row=5, column=1)
 entry_serwis=Entry(ramka_formularz)
 entry_serwis.grid(row=6, column=1)
 
+#guzik_zapisywania_po_edycji
 button_dodaj_obiekt=Button(ramka_formularz, text='Zapisz dane', command=zapisz_obiekt)
 button_dodaj_obiekt.grid(row=7, column=0, columnspan=2)
 
-#ramka_zarzAdzanie_mapa
+#ramka_zarządzanie_mapą
 ramka_map_interact.grid_columnconfigure(1, weight=1)
 label_map_interact=Label(ramka_map_interact,text="Zarządzanie mapą:",)
 label_map_interact.grid(row=0, column=0)
@@ -412,10 +388,8 @@ button_klienci.grid(row=4, column=0)
 button_pracownicy_serwisu = Button(ramka_map_interact, text="Pokaż pracowników serwisu", command=lambda: pokaz_pracownikow_serwisu(selected_service.get()))
 button_pracownicy_serwisu.grid(row=5, column=0)
 
-
-
 # ramka_mapa
-mapa = tkintermapview.TkinterMapView(ramka_mapa, width=800, height=550,)
+mapa = tkintermapview.TkinterMapView(ramka_mapa, width=800, height=500,)
 mapa.set_position(52.23,21.0)
 mapa.set_zoom(6)
 mapa.grid(row=0, column=0,)

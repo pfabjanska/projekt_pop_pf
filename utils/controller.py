@@ -29,13 +29,11 @@ class Services:
         self.service_location = service_location
         self.coordinates = coordinates if coordinates else self.get_coordinates()
 
-
     def get_coordinates(self) -> list:
         full_address = f"{self.service_name}, {self.service_location}"
         latitude, longitude = get_coordinates_nominatim(full_address)
         print(latitude, longitude)
         return [latitude, longitude] if latitude is not None else [0.0, 0.0]
-
 
 class Client:
     def __init__(self,client_name,client_service,client_location1,):
@@ -43,7 +41,6 @@ class Client:
         self.client_service=client_service
         self.client_location1=client_location1
         self.coordinates=self.get_coordinates()
-
 
     def get_coordinates(self) -> list:
         try:
@@ -55,8 +52,7 @@ class Client:
             print(latitude, longitude)
             return [latitude, longitude]
         except Exception:
-            print("Nie można pobrać współrzędnych.")
-            return [0.0, 0.0]
+            return None
 
 class Worker:
     def __init__(self,worker_name,worker_service,worker_location):
@@ -64,7 +60,6 @@ class Worker:
         self.worker_service=worker_service
         self.worker_location=worker_location
         self.coordinates=self.get_coordinates()
-
 
     def get_coordinates(self) -> list:
         try:
@@ -76,5 +71,4 @@ class Worker:
             print(latitude, longitude)
             return [latitude, longitude]
         except Exception:
-            print('Nie można pobrać współrzędnych')
-            return [0.0, 0.0]
+            return None
