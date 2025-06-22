@@ -16,9 +16,9 @@ def get_coordinates_nominatim(address: str) -> tuple:
     data = response.json()
 
     if data:
-        lat = float(data[0]['lat'])
-        lon = float(data[0]['lon'])
-        return lat, lon
+        latitude = float(data[0]['lat'])
+        longitude = float(data[0]['lon'])
+        return latitude, longitude
     else:
         print(f"Nie znaleziono współrzędnych dla: {address}")
         return None, None
@@ -32,8 +32,9 @@ class Services:
 
     def get_coordinates(self) -> list:
         full_address = f"{self.service_name}, {self.service_location}"
-        lat, lon = get_coordinates_nominatim(full_address)
-        return [lat, lon] if lat is not None else [0.0, 0.0]
+        latitude, longitude = get_coordinates_nominatim(full_address)
+        print(latitude, longitude)
+        return [latitude, longitude] if latitude is not None else [0.0, 0.0]
 
 
 class Client:
@@ -45,13 +46,17 @@ class Client:
 
 
     def get_coordinates(self) -> list:
-        url = f"https://pl.wikipedia.org/wiki/{self.client_location1}"
-        response = requests.get(url).text
-        response_html = BeautifulSoup(response, "html.parser")
-        longitude = float(response_html.select(".longitude")[1].text.replace(",", "."))
-        latitude = float(response_html.select(".latitude")[1].text.replace(",", "."))
-        return [latitude, longitude]
-
+        try:
+            url = f"https://pl.wikipedia.org/wiki/{self.client_location1}"
+            response = requests.get(url).text
+            response_html = BeautifulSoup(response, "html.parser")
+            longitude = float(response_html.select(".longitude")[1].text.replace(",", "."))
+            latitude = float(response_html.select(".latitude")[1].text.replace(",", "."))
+            print(latitude, longitude)
+            return [latitude, longitude]
+        except Exception:
+            print("Nie można pobrać współrzędnych.")
+            return [0.0, 0.0]
 
 class Worker:
     def __init__(self,worker_name,worker_service,worker_location):
@@ -62,11 +67,14 @@ class Worker:
 
 
     def get_coordinates(self) -> list:
-        import requests
-        from bs4 import BeautifulSoup
-        url = f"https://pl.wikipedia.org/wiki/{self.worker_location}"
-        response = requests.get(url).text
-        response_html = BeautifulSoup(response, "html.parser")
-        longitude = float(response_html.select(".longitude")[1].text.replace(",", "."))
-        latitude = float(response_html.select(".latitude")[1].text.replace(",", "."))
-        return [latitude, longitude]
+        try:
+            url = f"https://pl.wikipedia.org/wiki/{self.worker_location}"
+            response = requests.get(url).text
+            response_html = BeautifulSoup(response, "html.parser")
+            longitude = float(response_html.select(".longitude")[1].text.replace(",", "."))
+            latitude = float(response_html.select(".latitude")[1].text.replace(",", "."))
+            print(latitude, longitude)
+            return [latitude, longitude]
+        except Exception:
+            print('Nie można pobrać współrzędnych')
+            return [0.0, 0.0]

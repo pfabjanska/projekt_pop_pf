@@ -44,8 +44,9 @@ class Services:
 
     def get_coordinates(self) -> list:
         full_address = f"{self.service_name}, {self.service_location}"
-        lat, lon = get_coordinates_nominatim(full_address)
-        return [lat, lon] if lat is not None else [0.0, 0.0]
+        latitude, longitude = get_coordinates_nominatim(full_address)
+        print(latitude, longitude)
+        return [latitude, longitude] if latitude is not None else [0.0, 0.0]
 
 
 class Client:
@@ -57,14 +58,18 @@ class Client:
 
 
     def get_coordinates(self) -> list:
-        url = f"https://pl.wikipedia.org/wiki/{self.client_location1}"
-        response = requests.get(url).text
-        response_html = BeautifulSoup(response, "html.parser")
-        longitude = float(response_html.select(".longitude")[1].text.replace(",", "."))
-        latitude = float(response_html.select(".latitude")[1].text.replace(",", "."))
-        print(longitude)
-        print(latitude)
-        return [latitude, longitude]
+        try:
+            url = f"https://pl.wikipedia.org/wiki/{self.client_location1}"
+            response = requests.get(url).text
+            response_html = BeautifulSoup(response, "html.parser")
+            longitude = float(response_html.select(".longitude")[1].text.replace(",", "."))
+            latitude = float(response_html.select(".latitude")[1].text.replace(",", "."))
+            print(latitude, longitude)
+            return [latitude, longitude]
+        except Exception:
+            return None
+
+
 
 
 class Worker:
@@ -76,16 +81,16 @@ class Worker:
 
 
     def get_coordinates(self) -> list:
-        import requests
-        from bs4 import BeautifulSoup
-        url = f"https://pl.wikipedia.org/wiki/{self.worker_location}"
-        response = requests.get(url).text
-        response_html = BeautifulSoup(response, "html.parser")
-        longitude = float(response_html.select(".longitude")[1].text.replace(",", "."))
-        latitude = float(response_html.select(".latitude")[1].text.replace(",", "."))
-        print(longitude)
-        print(latitude)
-        return [latitude, longitude]
+        try:
+            url = f"https://pl.wikipedia.org/wiki/{self.worker_location}"
+            response = requests.get(url).text
+            response_html = BeautifulSoup(response, "html.parser")
+            longitude = float(response_html.select(".longitude")[1].text.replace(",", "."))
+            latitude = float(response_html.select(".latitude")[1].text.replace(",", "."))
+            print(latitude, longitude)
+            return [latitude, longitude]
+        except Exception:
+            return None
 
 
 def odswiez_liste_serwisow():
@@ -270,7 +275,7 @@ def pokaz_klientow_serwisu(serwis_nazwa):
     if serwis:
         lat_s, lon_s = serwis.coordinates
         mapa.set_position(lat_s, lon_s)
-        mapa.set_zoom(7)
+        mapa.set_zoom(9)
         klienci = [k for k in model.clients if k.client_service == serwis_nazwa]
         for klient in klienci:
             lat, lon = klient.coordinates
@@ -284,7 +289,7 @@ def pokaz_pracownikow_serwisu(serwis_nazwa):
     if serwis:
         lat_s, lon_s = serwis.coordinates
         mapa.set_position(lat_s, lon_s)
-        mapa.set_zoom(7)
+        mapa.set_zoom(9)
         pracownicy = [p for p in model.workers if p.worker_service == serwis_nazwa]
         for pracownik in pracownicy:
             lat, lon = pracownik.coordinates
