@@ -1,20 +1,33 @@
-services: list[dict] = [
-    {'service_name': 'HappyBike', 'service_location': 'Turek'},
-    {'service_name': 'BikeProject', 'service_location': 'Warszawa'},
-    {'service_name': 'Sportset', 'service_location': 'Kutno'},
-    {'service_name': 'Rowerologia', 'service_location': 'Gdańsk'}
+from utils.controller import Services, Client, Worker
+
+services = [
+    Services("BikeTur", 'Turek'),
+    Services("Cozmo Bike", 'Warszawa'),
+    Services("Bike Atelier", 'Katowice'),
+    Services("Rotech", 'Kutno')
 ]
 
-clients: list[dict] = [
-    {'client_name': 'Andrzej Grodzik', 'client_service': 'HappyBike', 'client_location1': 'Poznań'},
-    {'client_name': 'Maja Gaja','client_service':'BikeProject', 'client_location1':'Wołomin'},
-    {'client_name': 'Szymon Kajak','client_service':'Sportset', 'client_location1':'Krośniewice'},
-    {'client_name': 'Milena Kolarka','client_service':'Rowerologia','client_location1':'Sopot'}
+
+
+clients = [
+    Client("Andrzej Grodzik","BikeTur", "Poznań"),
+    Client("Maja Gaja","Cozmo Bike", "Wołomin"),
+    Client("Szymon Kajak","Rotech", "Krośniewice"),
+    Client("Milena Kolarka","Bike Atelier", "Sopot")
 ]
 
-workers: list[dict] = [
-    {'worker_name': 'Ryszard Śliski', 'worker_service': 'HappyBike', 'worker_location': 'Koło'},
-    {'worker_name': 'Marta Kowalska', 'worker_service': 'BikeProject', 'worker_location': 'Pruszków'},
-    {'worker_name': 'Stefan Potoczek', 'worker_service': 'Sportset', 'worker_location': 'Łowicz'},
-    {'worker_name': 'Malwina Kalina', 'worker_service': 'Rowerologia', 'worker_location':'Szczecin'}
+
+workers = [
+    Worker("Ryszard Śliski","Bike Atelier", "Radom"),
+    Worker("Ryszard Śliski","Bike Atelier", "Radom"),
+    Worker("Ryszard Śliski","Bike Atelier", "Radom"),
+    Worker("Marta Kowalska","Cozmo Bike", "Kielce"),
+    Worker("Marta Kowalska","Cozmo Bike", "Kielce"),
+    Worker("Marta Kowalska","Cozmo Bike", "Kielce"),
+    Worker("Stefan Potoczek","Rotech", "Łowicz"),
+    Worker("Stefan Potoczek","Rotech", "Łowicz"),
+    Worker("Malwina Kalina", "BikeTur", "Szczecin")
+    Worker("Malwina Kalina","BikeTur", "Szczecin")
 ]
+
+
