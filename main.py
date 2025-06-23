@@ -83,20 +83,6 @@ class Worker:
             return None
 
 
-def odswiez_liste_serwisow():
-    listbox_lista_obiektow.delete(0, END)
-    for service in model.services:
-        listbox_lista_obiektow.insert(END, f"{service.service_name} ({service.service_location})")
-
-def odswiez_liste_klientow():
-    listbox_lista_obiektow_klient.delete(0, END)
-    for klient in model.clients:
-        listbox_lista_obiektow_klient.insert(END, f"{klient.client_name} ({klient.client_service})")
-
-def odswiez_liste_pracownikow():
-    listbox_lista_obiektow_pracownik.delete(0, END)
-    for pracownik in model.workers:
-        listbox_lista_obiektow_pracownik.insert(END, f"{pracownik.worker_name} ({pracownik.worker_service})")
 
 def dodaj_serwis():
     nazwa = entry_serwis.get()
@@ -283,6 +269,35 @@ def pokaz_pracownikow_serwisu(serwis_nazwa):
             lat, lon = pracownik.coordinates
             mapa.set_marker(lat, lon, text=pracownik.worker_name)
 
+def pokaz_klientów():
+    mapa.set_zoom(6)
+    mapa.set_position(52.23, 21.0)
+    mapa.delete_all_marker()
+    for klient in model.clients:
+        lat, lon = klient.coordinates
+        mapa.set_marker(lat, lon, text=klient.client_name)
+
+
+
+def odswiez_liste_serwisow():
+    listbox_lista_obiektow.delete(0, END)
+    for service in model.services:
+        listbox_lista_obiektow.insert(END, f"{service.service_name} ({service.service_location})")
+
+
+
+def odswiez_liste_klientow():
+    listbox_lista_obiektow_klient.delete(0, END)
+    for klient in model.clients:
+        listbox_lista_obiektow_klient.insert(END, f"{klient.client_name} ({klient.client_service})")
+
+
+def odswiez_liste_pracownikow():
+    listbox_lista_obiektow_pracownik.delete(0, END)
+    for pracownik in model.workers:
+        listbox_lista_obiektow_pracownik.insert(END, f"{pracownik.worker_name} ({pracownik.worker_service})")
+
+
 root = Tk()
 root.geometry("1200x760")
 root.title("Projekt pop pf")
@@ -387,6 +402,8 @@ button_klienci = Button(ramka_map_interact, text="Pokaż klientów serwisu", com
 button_klienci.grid(row=4, column=0)
 button_pracownicy_serwisu = Button(ramka_map_interact, text="Pokaż pracowników serwisu", command=lambda: pokaz_pracownikow_serwisu(selected_service.get()))
 button_pracownicy_serwisu.grid(row=5, column=0)
+button_pokaz_klientow=Button(ramka_map_interact, text='Pokaz wszystkich klientów', command=pokaz_klientów)
+button_pokaz_klientow.grid(row=6, column=0)
 
 # ramka_mapa
 mapa = tkintermapview.TkinterMapView(ramka_mapa, width=800, height=500,)
